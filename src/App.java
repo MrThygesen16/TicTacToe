@@ -48,7 +48,7 @@ public class App {
             turn();
         }
 
-        System.out.println("\n END OF GAME \n");
+        System.out.println("\n DRAW! \n");
     }
 
     // this function is called whenever we want the user to input a value
@@ -61,6 +61,7 @@ public class App {
     	playerInput = console.readLine(msg);
         return playerInput;	
 	}
+
 
     
     public void setPlayerNames(){
@@ -77,14 +78,11 @@ public class App {
         players[1].setName(player2Name);
         players[1].setMarker('X');;
 
-
         // displays the player names & their mark...
         for (int i = 0; i < players.length; i++){
             players[i].printPlayerInfo();
         }
 
-
-        System.out.println("\n---- Game Begins Now ----");
     }
 
 
@@ -93,6 +91,12 @@ public class App {
         System.out.flush();
     }
 
+    public boolean errorMessageSpot(int t){
+        clearScreen();
+        printGrid();
+        System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
+        return false;
+    }
 
     public boolean feasibleSpot(int choice, int t){
 
@@ -101,90 +105,63 @@ public class App {
                 if(grid[0][0] == (' ')){
                     grid[0][0] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
             case 2:
                 if(grid[0][1] == (' ')){
                 grid[0][1] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
             case 3:
                 if(grid[0][2] == (' ')){
                     grid[0][2] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
             case 4:
                 if(grid[1][0] == (' ')){
                     grid[1][0] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
             case 5:
                 if(grid[1][1] == (' ')){
                     grid[1][1] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
             case 6:
                 if(grid[1][2] == (' ')){
                     grid[1][2] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
             case 7:
                 if(grid[2][0] == (' ')){
                     grid[2][0] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
             case 8:
                 if(grid[2][1] == (' ')){
                     grid[2][1] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
             case 9:
                 if(grid[2][2] == (' ')){
                     grid[2][2] = players[t].getMarker();
                 } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
-                    return false;
+                    return errorMessageSpot(t);
                 }
                 break;
 
@@ -196,7 +173,7 @@ public class App {
 
     public void chooseGrid(int i){
         
-        System.out.println("Turn #" + turn + " | " + players[i].getName() + "'s turn");
+        System.out.println("Turn #" + turn + " | " + players[i].getName() + "'s turn [" + players[i].getMarker() + "]");
         boolean picked = false;
 
         int numChoice = -1;
@@ -229,6 +206,7 @@ public class App {
 
         }
 
+        //checkForWin(i);
 
         clearScreen();
         printGrid();
@@ -238,6 +216,11 @@ public class App {
     public void turn(){
 
         clearScreen();
+
+        if (turn == 0){
+            System.out.println("\n---- Game Begins Now ----\n");
+        }
+
         int i = -1;
 
         if (turn % 2 == 0){
