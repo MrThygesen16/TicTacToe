@@ -5,32 +5,39 @@ public class Player {
 
     // Constructors
     public Player(String n, char m){
-        name = n;
-        marker = m;
+        this.name = n;
+        this.marker = m;
     }
 
     public Player(){
-        name = "---";
-        marker = '-';
+        this.name = "---";
+        this.marker = '-';
     }
 
 
     // Setters
     public void setName(String n){
-        name = n;
+        this.name = n;
     }
 
     public void setMarker(char m){
-        marker = m;
+        this.marker = m;
     }
 
     // Getters
     public String getName(){
-        return name;
+        return this.name;
     }
 
     public char getMarker(){
-        return marker;
+        return this.marker;
+    }
+
+
+    // to string stuff
+
+    public void printPlayerInfo(){
+        System.out.println(this.name + " " + this.marker);
     }
 
 
