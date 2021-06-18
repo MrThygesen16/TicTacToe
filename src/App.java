@@ -44,8 +44,10 @@ public class App {
 
         setPlayerNames();
 
-        while (turn < 9){
-            turn();
+    
+
+        while (turn < 9 ){
+                turn();
         }
 
         System.out.println("\n DRAW! \n");
@@ -61,7 +63,6 @@ public class App {
     	playerInput = console.readLine(msg);
         return playerInput;	
 	}
-
 
     
     public void setPlayerNames(){
@@ -171,50 +172,141 @@ public class App {
     }
     
 
-    public void chooseGrid(int i){
+    public String declareWinner(int i){
+
+        return "\n" + players[i].getName() + " WON!!!" + "(" +  players[i].getMarker() +")\n";
+    }
+
+
+    public boolean checkForWin(int in){
         
-        System.out.println("Turn #" + turn + " | " + players[i].getName() + "'s turn [" + players[i].getMarker() + "]");
-        boolean picked = false;
+        boolean won = false;
 
-        int numChoice = -1;
-        String choice = "";
+        // set 1
+        if (grid[0][0] != ' '){
 
-        printGrid();
+            // 1st row
+            if (grid[0][0] == grid[0][1] && grid[0][1] == grid[0][2]){
+                won = true;
+            }
+
+            // Diagonal left to right
+            if (grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2]){
+                won = true;
+            }
+
+            // First Columns
+            if (grid[0][0] == grid[1][0] && grid[1][1] == grid[2][0]){
+                won = true;
+            }
+
+
+        }
+
+        // set 2
+        if (grid[0][1] != ' '){
+
+            // middle column
+            if (grid[0][1] == grid[1][1] && grid[1][1] == grid[2][1]){
+                won = true;
+            }
+
+        }
         
-        System.out.println(players[i].getName() + ", please choose a number... ");
-                	System.out.println("1. A0\t 2. B0\t 3. C0\n4. A1\t 5. B1\t 6. C1\n7. A2\t 8. B2\t 9. C2");
-    
+        // set 3
+        if (grid[0][2] != ' '){
 
-        while (!picked){
-            choice = playerInput("Choice: ");
+            // diagonal left to right
+            if (grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0]){
+                won = true;
+            }
 
-            try {
-                numChoice = Integer.parseInt(choice);
-                
-                if (numChoice >= 1 && numChoice <= 9){
-                    picked = feasibleSpot(numChoice, i); // check if we can choose that grid square
-                } else {
-                    clearScreen();
-                    printGrid();
-                    System.out.println(players[i].getName() + " please pick a Number between 1 & 9...");
-                }
-                
-                
-            } catch (Exception e){
-                System.out.println("Error with input!");
+            // right column
+            if (grid[0][2] == grid[1][2] && grid[1][2] == grid[2][2]){
+                won = true;
             }
 
         }
 
-        //checkForWin(i);
 
-        clearScreen();
-        printGrid();
+        //set 4
+        if (grid[1][2] != ' '){
+
+            // middle row
+            if (grid[1][2] == grid[1][1] && grid[1][1] == grid[1][0]){
+                won = true;
+            }
+
+        }
+
+        // set 5
+        if (grid[2][2] != ' '){
+
+            // bottom row
+            if (grid[2][2] == grid[2][1] && grid[2][1] == grid[2][0]){
+                won = true;
+            }
+
+        }
+        
+        
+        // if win condition = true declare winner and end program
+        return won;
+    }
+
+
+    public void chooseGrid(int i){
+        
+            System.out.println("Turn #" + turn + " | " + players[i].getName() + "'s turn [" + players[i].getMarker() + "]");
+            boolean picked = false;
+
+            int numChoice = -1;
+            String choice = "";
+
+            printGrid();
+            
+            System.out.println(players[i].getName() + ", please choose a number... ");
+                        System.out.println("1. A0\t 2. B0\t 3. C0\n4. A1\t 5. B1\t 6. C1\n7. A2\t 8. B2\t 9. C2");
+        
+
+            while (!picked){
+                choice = playerInput("Choice: ");
+
+                try {
+                    numChoice = Integer.parseInt(choice);
+                    
+                    if (numChoice >= 1 && numChoice <= 9){
+                        picked = feasibleSpot(numChoice, i); // check if we can choose that grid square
+
+                        // once square has been updated we check to see
+
+                    } else {
+                        clearScreen();
+                        printGrid();
+                        System.out.println(players[i].getName() + " please pick a Number between 1 & 9...");
+                    }
+                    
+                    
+                } catch (Exception e){
+                    System.out.println("Error with input!");
+                }
+
+            }
+
+            clearScreen();
+            printGrid();
+
+            if (checkForWin(i)){
+                System.out.println(declareWinner(i));
+                System.exit(0);
+            } 
     }
 
 
     public void turn(){
 
+
+            
         clearScreen();
 
         if (turn == 0){
