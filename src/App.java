@@ -61,6 +61,12 @@ public class App {
 		String playerInput = "";
 
     	playerInput = console.readLine(msg);
+
+        // at any point a player may enter QUIT to force exit the game
+        if (playerInput.equals("QUIT")){
+            System.exit(0);
+        }
+
         return playerInput;	
 	}
 
@@ -87,18 +93,25 @@ public class App {
     }
 
 
+    // gives appearence of updating screen
     public void clearScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    // if the user picks a spot that has already been picked
+    // we clear the screen print the grid
+    // and give a warning
     public boolean errorMessageSpot(int t){
         clearScreen();
         printGrid();
         System.out.println(players[t].getName() + " please pick a square that hasn't been picked!");
+        moveInstructionMessage(t);
         return false;
     }
 
+    // essentially if the spot they are trying to pick is anything other than ' ' (blank)
+    // we throw the error code above
     public boolean feasibleSpot(int choice, int t){
 
         switch(choice){
@@ -171,13 +184,17 @@ public class App {
         return true;
     }
     
-
+    // once winner has been determined we give this messsage
     public String declareWinner(int i){
 
         return "\n" + players[i].getName() + " WON!!!" + "(" +  players[i].getMarker() +")\n";
     }
+    
 
-
+    /* 
+        Logic for testing who has won...
+    
+    */
     public boolean checkForWin(int in){
         
         boolean won = false;
@@ -195,7 +212,7 @@ public class App {
                 won = true;
             }
 
-            // First Columns
+            // First Column
             if (grid[0][0] == grid[1][0] && grid[1][1] == grid[2][0]){
                 won = true;
             }
@@ -216,7 +233,7 @@ public class App {
         // set 3
         if (grid[0][2] != ' '){
 
-            // diagonal left to right
+            // diagonal right to left
             if (grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0]){
                 won = true;
             }
@@ -254,7 +271,15 @@ public class App {
         return won;
     }
 
+    // this is called everytime a new turn is started...
+    public void moveInstructionMessage(int i){
 
+        System.out.println(players[i].getName() + ", please choose a number... ");
+                        System.out.println("1. A0\t 2. B0\t 3. C0\n4. A1\t 5. B1\t 6. C1\n7. A2\t 8. B2\t 9. C2");
+    }
+
+
+    // this handles the nain logic for choice in the game...
     public void chooseGrid(int i){
         
             System.out.println("Turn #" + turn + " | " + players[i].getName() + "'s turn [" + players[i].getMarker() + "]");
@@ -265,9 +290,7 @@ public class App {
 
             printGrid();
             
-            System.out.println(players[i].getName() + ", please choose a number... ");
-                        System.out.println("1. A0\t 2. B0\t 3. C0\n4. A1\t 5. B1\t 6. C1\n7. A2\t 8. B2\t 9. C2");
-        
+            moveInstructionMessage(i);
 
             while (!picked){
                 choice = playerInput("Choice: ");
@@ -284,6 +307,8 @@ public class App {
                         clearScreen();
                         printGrid();
                         System.out.println(players[i].getName() + " please pick a Number between 1 & 9...");
+                        moveInstructionMessage(i);
+                        
                     }
                     
                     
@@ -302,13 +327,14 @@ public class App {
             } 
     }
 
-
+    // this essentially acts as a statemachine
+    // if the turn # is even i = 0 means it's player 1
+    // turn # odd means it's player 2
     public void turn(){
 
-
-            
         clearScreen();
 
+        // this is a comment
         if (turn == 0){
             System.out.println("\n---- Game Begins Now ----\n");
         }
@@ -326,6 +352,7 @@ public class App {
         chooseGrid(i);
     }
 
+    // this makes the grid that the user sees in the game
     public void printGrid(){
 
 		System.out.println("\n     A     B     C  ");
