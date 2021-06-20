@@ -193,6 +193,34 @@ public class App {
 
     /* 
         Logic for testing who has won...
+
+        The Grid and its corresponding position in the 2d array:
+
+             A      B      C
+        0 (0, 0) (0, 1) (0, 2)
+
+        1 (1, 0) (1, 1) (1, 2)
+
+        2 (2, 0) (2, 1) (2, 2)
+
+    
+        Set 1 tests:
+            column A [0][0] -> [1][0] -> [2][0]
+            row 0 [0][0] -> [0][1] -> [0][2]
+            diagonal from A0 to C2 [0][0] -> [1][1] -> [2][2]
+
+        Set 2 tests: 
+            just column B [0][1] -> [1][1] -> [2][1]
+
+        Set 3 tests: 
+            column C [0][2] -> [1][2] -> [2][2]
+            diaganol from C0 to A2 [0][2] -> [1][1] -> [2][0]
+
+        Set 4 tests: 
+            just row 1 [1][2] -> [1][1] -> [1][0]
+
+        Set 5 tests: 
+            row 2 [2][2] -> [2][1] -> [2][0]
     
     */
     public boolean checkForWin(int in){
@@ -202,18 +230,18 @@ public class App {
         // set 1
         if (grid[0][0] != ' '){
 
-            // 1st row
+            // 1st row [0][0] -> [0][1] -> [0][2]
             if (grid[0][0] == grid[0][1] && grid[0][1] == grid[0][2]){
                 won = true;
             }
 
-            // Diagonal left to right
+            // Diagonal left to right [0][0] -> [1][1] -> [2][2]
             if (grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2]){
                 won = true;
             }
 
-            // First Column
-            if (grid[0][0] == grid[1][0] && grid[1][1] == grid[2][0]){
+            // First Column [0][0] -> [1][0] -> [2][0]
+            if (grid[0][0] == grid[1][0] && grid[1][0] == grid[2][0]){
                 won = true;
             }
 
@@ -223,7 +251,7 @@ public class App {
         // set 2
         if (grid[0][1] != ' '){
 
-            // middle column
+            // middle column [0][1] -> [1][1] -> [2][1]
             if (grid[0][1] == grid[1][1] && grid[1][1] == grid[2][1]){
                 won = true;
             }
@@ -233,12 +261,12 @@ public class App {
         // set 3
         if (grid[0][2] != ' '){
 
-            // diagonal right to left
+            // diagonal right to left [0][2] -> [1][1] -> [2][0]
             if (grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0]){
                 won = true;
             }
 
-            // right column
+            // right column [0][2] -> [1][2] -> [2][2]
             if (grid[0][2] == grid[1][2] && grid[1][2] == grid[2][2]){
                 won = true;
             }
@@ -249,7 +277,7 @@ public class App {
         //set 4
         if (grid[1][2] != ' '){
 
-            // middle row
+            // middle row [1][2] -> [1][1] -> [1][0]
             if (grid[1][2] == grid[1][1] && grid[1][1] == grid[1][0]){
                 won = true;
             }
@@ -259,7 +287,7 @@ public class App {
         // set 5
         if (grid[2][2] != ' '){
 
-            // bottom row
+            // bottom row [2][2] -> [2][1] -> [2][0]
             if (grid[2][2] == grid[2][1] && grid[2][1] == grid[2][0]){
                 won = true;
             }
@@ -279,7 +307,7 @@ public class App {
     }
 
 
-    // this handles the nain logic for choice in the game...
+    // this handles the main logic for choice in the game...
     public void chooseGrid(int i){
         
             System.out.println("Turn #" + turn + " | " + players[i].getName() + "'s turn [" + players[i].getMarker() + "]");
@@ -327,7 +355,7 @@ public class App {
             } 
     }
 
-    // this essentially acts as a statemachine
+    // this essentially acts as a state-machine
     // if the turn # is even i = 0 means it's player 1
     // turn # odd means it's player 2
     public void turn(){
