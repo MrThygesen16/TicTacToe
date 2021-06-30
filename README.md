@@ -73,7 +73,9 @@ Choice: 6
 
 ```
 
-When the user enters in the number `6`, the game will update, allowing the other player to input their selection:
+In the above example the player Mike input the number `6`. This corresponds to the cell location `C1`. 
+
+Once Mike enters in his selection, the game switches over to the second Player's turn. In this case, player 2 is Pete.
 
 
 ```
