@@ -1,7 +1,7 @@
 # TicTacToe
 Simple Tic-Tac-Toe Game in Java
 
-Quick little 2-player console based version of Tic-Tac-Toe that I threw together.
+Quick little 2-player console based version of Tic-Tac-Toe that I threw together as a project during my Uni break.
 
 
 Here is an example of what the game looks like while running:
